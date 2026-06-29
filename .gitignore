@@ -12,6 +12,7 @@ build/
 .env.*
 *.pem
 *.key
+.secrets/
 
 # France Identité starter kits (their templates — kept local, not republished)
 hello-world-main/
