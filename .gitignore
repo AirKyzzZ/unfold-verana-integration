@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+
+# Node
+node_modules/
+dist/
+build/
+*.log
+
+# Env / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# France Identité starter kits (their templates — kept local, not republished)
+hello-world-main/
+helm-hello-world-main/
+
+# Local scratch
+scratchpad/
