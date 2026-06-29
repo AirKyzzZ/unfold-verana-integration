@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+spec:
+  hosts:
+    - {{ .Values.istio.host | quote }}
+  gateways:
+    - {{ .Values.istio.gateway }}
+  http:
+    - match:
+        - uri:
+            prefix: {{ .Values.istio.pathPrefix | quote }}
+      # Strip the public path prefix before forwarding; Vite `base` re-adds it for assets.
+      rewrite:
+        uri: "/"
+      route:
+        - destination:
+            host: {{ .Chart.Name }}
+            port:
+              number: {{ .Values.service.port }}

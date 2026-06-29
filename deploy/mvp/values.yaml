@@ -1,0 +1,45 @@
+# Number of pod replicas
+replicaCount: 1
+
+# Container image — pushed by the app repo's .gitlab-ci.yml to the `verana` Harbor project
+image:
+  repository: tools.playground.france-identite.gouv.fr/verana/verana-mvp
+  tag: latest
+  pullPolicy: Always
+
+# Kubernetes secret holding Harbor pull credentials (provisioned in the namespace)
+imagePullSecret: harbor-registry-secret
+
+# Container-level security context
+securityContext:
+  runAsUser: 1000
+
+# Service and port configuration (mirrors the playground hello-world starter)
+service:
+  type: ClusterIP
+  port: 5173
+  containerPort: 80
+
+# Istio VirtualService settings
+istio:
+  # !! fixed by the platform — do not change, the API gateway routes on these !!
+  host: "api.playground.france-identite.gouv.local"
+  gateway: "istio-system/api-gateway"
+  # Unique public path prefix for this service. MUST match `base` in apps/mvp/vite.config.ts.
+  pathPrefix: "/verana/mvp/"
+
+# Horizontal Pod Autoscaler settings
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# CPU and memory resource allocation
+resources:
+  requests:
+    cpu: "100m"
+    memory: "64Mi"
+  limits:
+    cpu: "200m"
+    memory: "128Mi"

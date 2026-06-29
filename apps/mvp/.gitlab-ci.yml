@@ -1,0 +1,23 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""] # Disable default entrypoint to run Kaniko directly
+  script:
+    # Docker auth config for the Harbor registry (basic auth, base64-encoded)
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${HARBOR_HOST}\":{\"auth\":\"$(echo -n ${HARBOR_USERNAME}:${HARBOR_PASSWORD} | base64 -w 0)\"}}}" > /kaniko/.docker/config.json
+
+    # Build once, push both the commit SHA and `latest` so the Helm chart's
+    # `image.tag: latest` resolves without a per-deploy tag bump.
+    - |
+      /kaniko/executor \
+      --context "${CI_PROJECT_DIR}" \
+      --dockerfile "Dockerfile" \
+      --destination "${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}" \
+      --destination "${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}:latest"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
