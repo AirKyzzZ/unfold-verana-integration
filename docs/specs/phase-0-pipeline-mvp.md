@@ -8,42 +8,44 @@
 
 > The push to GitLab/Harbor/ArgoCD needs your authenticated playground access — follow the steps below. Authoritative platform docs: https://playground.france-identite.gouv.fr/doc/deploy/
 
+> Naming/paths below are verified against the deploy docs: [01-build-and-image-publish](https://playground.france-identite.gouv.fr/deploy/01-build-and-image-publish/), [02-gitlab-cicd-pipeline](https://playground.france-identite.gouv.fr/deploy/02-gitlab-cicd-pipeline/), [03-helm-chart-deployment](https://playground.france-identite.gouv.fr/deploy/03-helm-chart-deployment/), [04-virtualservice-routing](https://playground.france-identite.gouv.fr/deploy/04-virtualservice-routing/), [05-argocd-application](https://playground.france-identite.gouv.fr/deploy/05-argocd-application/). Entity namespace = `verana`; GitLab group = `plg/partners/verana`.
+
 ## Invariants (must stay aligned)
 - `apps/mvp/vite.config.ts` `base` **===** `deploy/mvp/values.yaml` `istio.pathPrefix` **===** `/verana/mvp/`.
-- The **GitLab app project name must be `verana-mvp`** — the CI pushes `${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}`, and `values.yaml` `image.repository` is hardcoded to `…/verana/verana-mvp`.
+- The **GitLab app project must be named `mvp`** — CI pushes `${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}`, so `CI_PROJECT_NAME=mvp` → image `…/verana/mvp`, which `values.yaml` `image.repository` points at.
 
 ## Steps
 
-1. **Two GitLab projects** under the `verana` group on `tools.playground.france-identite.gouv.fr`:
-   - `verana-mvp` ← contents of `apps/mvp/`
-   - `verana-mvp-helm` ← contents of `deploy/mvp/`
+1. **Two GitLab projects** under group `plg/partners/verana` on `tools.playground.france-identite.gouv.fr/gitlab`:
+   - `mvp` ← contents of `apps/mvp/`
+   - `helm-mvp` ← contents of `deploy/mvp/`  (convention: helm repo = `helm-{slug}`)
 
-2. **App CI variables** (`verana-mvp` → Settings → CI/CD → Variables):
+2. **App CI variables** (`mvp` → Settings → CI/CD → Variables) — some may already be set at group level:
    - `HARBOR_HOST` = `tools.playground.france-identite.gouv.fr`
    - `HARBOR_PROJECT` = `verana`
-   - `HARBOR_USERNAME` / `HARBOR_PASSWORD` = your Harbor robot/account credentials (mask them)
+   - `HARBOR_USERNAME` / `HARBOR_PASSWORD` = your Harbor robot credentials (masked)
 
-3. **Push `apps/mvp/` to `main`.** The pipeline builds with Kaniko and pushes `verana/verana-mvp:<sha>` and `:latest` to Harbor. Confirm the image in the Harbor UI.
+3. **Push `apps/mvp/` to `main`.** The pipeline (Kaniko, `only: main`) pushes `verana/mvp:<sha>` and refreshes the mutable `verana/mvp:latest`. Confirm the image in Harbor.
 
-4. **Pull secret.** Ensure `harbor-registry-secret` exists in the `verana` namespace (if the platform didn't provision it):
+4. **Pull secret.** Ensure `harbor-registry-secret` exists in the `verana` namespace (if not platform-provisioned):
    ```
    kubectl create secret docker-registry harbor-registry-secret \
      --docker-server=tools.playground.france-identite.gouv.fr \
      --docker-username=<user> --docker-password=<token> -n verana
    ```
 
-5. **ArgoCD.** Point an ArgoCD Application at the `verana-mvp-helm` repo, destination namespace `verana` (example below). Confirm against the platform's ArgoCD setup — they may provision the Application for you.
+5. **ArgoCD Application** (you create it; repo credentials and the `verana` ArgoCD project are platform-provisioned):
    ```yaml
    apiVersion: argoproj.io/v1alpha1
    kind: Application
    metadata:
-     name: verana-mvp
+     name: mvp
      namespace: argocd
    spec:
      project: verana
      source:
-       repoURL: https://tools.playground.france-identite.gouv.fr/gitlab/verana/verana-mvp-helm.git
-       targetRevision: main
+       repoURL: https://tools.playground.france-identite.gouv.fr/gitlab/plg/partners/verana/helm-mvp.git
+       targetRevision: HEAD
        path: .
      destination:
        server: https://kubernetes.default.svc
