@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react-swc'
 // Istio rewrites /verana/mvp/ -> / before reaching nginx, and Vite emits asset
 // URLs under this base so every prefixed request routes back to this service.
 export default defineConfig({
-  base: '/verana/mvp/',
+  base: '/verana/verana/',
   plugins: [react()],
 })

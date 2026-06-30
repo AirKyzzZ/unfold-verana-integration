@@ -3,8 +3,8 @@ replicaCount: 1
 
 # Container image — pushed by the app repo's .gitlab-ci.yml to the `verana` Harbor project
 image:
-  # = ${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}; the GitLab app project is `mvp`.
-  repository: tools.playground.france-identite.gouv.fr/verana/mvp
+  # = ${HARBOR_HOST}/${HARBOR_PROJECT}/${CI_PROJECT_NAME}; the GitLab app project is `verana`.
+  repository: tools.playground.france-identite.gouv.fr/verana/verana
   # `latest` is mutable and refreshed on every `main` build (per deploy docs 02/03).
   tag: latest
   pullPolicy: Always
@@ -28,7 +28,7 @@ istio:
   host: "api.playground.france-identite.gouv.local"
   gateway: "istio-system/api-gateway"
   # Unique public path prefix for this service. MUST match `base` in apps/mvp/vite.config.ts.
-  pathPrefix: "/verana/mvp/"
+  pathPrefix: "/verana/verana/"
 
 # Horizontal Pod Autoscaler settings
 autoscaling:
