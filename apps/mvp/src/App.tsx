@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Playground } from './components/Playground.tsx'
 import { Docs } from './components/Docs.tsx'
+import { VeranaMark } from './components/VeranaMark.tsx'
 
 const DOCS_URL = 'https://docs.verana.io'
 
@@ -24,7 +25,7 @@ export function App() {
       <header className="site-head">
         <div className="wrap">
           <a className="brand" href="#/">
-            <span className="seal">✦</span> Verana
+            <VeranaMark size={30} /> Verana
           </a>
           <nav className="head-nav">
             <a href="#/" className={!onDocs ? 'on' : ''}>Playground</a>

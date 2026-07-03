@@ -4,17 +4,17 @@ import { resolve, VERDICT_META, type Resolution } from '../lib/trust.ts'
 const PRESETS: { label: string; did: string; tone: string }[] = [
   {
     label: 'MOSIP ecosystem anchor',
-    tone: 'var(--verify)',
+    tone: 'var(--ok)',
     did: 'did:webvh:QmUNEzd1z2TktGLNhQKYuhNp6ckq4xzetHD5oVdH2YD3PA:organization-vs.mosip.testnet.verana.network',
   },
   {
-    label: 'Inji verifier',
-    tone: 'var(--partial)',
+    label: 'A verifier (Inji Verify)',
+    tone: 'var(--ok)',
     did: 'did:web:inji-verify.mosip.testnet.verana.network:v1:verify',
   },
   {
     label: 'Counter-example',
-    tone: 'var(--untrust)',
+    tone: 'var(--bad)',
     did: 'did:web:not-a-member.example.com',
   },
 ]
@@ -113,6 +113,16 @@ function Verdict({ res }: { res: Resolution }) {
                 <b>{res.message}</b>
               </span>
             )}
+          </div>
+          <div className="verdict-links">
+            <a
+              className="mini-link"
+              href={`https://vis.testnet.verana.network/did-directory?did=${encodeURIComponent(res.did)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Explore this DID in the Verana visualizer ↗
+            </a>
           </div>
         </div>
       </div>

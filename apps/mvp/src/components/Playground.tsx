@@ -1,5 +1,43 @@
 import { Resolver } from './Resolver.tsx'
 
+const VERANA_APP = 'https://app.testnet.verana.network'
+const VISUALIZER = 'https://vis.testnet.verana.network'
+const EXPLORER = 'https://explorer.testnet.verana.network/Verana%20Testnet'
+
+const CAPS: { tag: string; title: string; body: string; lead?: boolean }[] = [
+  {
+    tag: 'This demo',
+    title: 'Verify the verifier',
+    body: 'Resolve whether a relying party is an active VERIFIER Participant for the credential it requests — the eIDAS 2 RP-authorization check the wallet needs.',
+    lead: true,
+  },
+  {
+    tag: 'Issuance',
+    title: 'Verify the issuer',
+    body: 'Confirm a credential’s issuer is an accredited ISSUER Participant for its Credential Schema — accreditation a signature alone can’t prove.',
+  },
+  {
+    tag: 'Governance',
+    title: 'Ecosystem governance',
+    body: 'On-chain Trust Registries with versioned governance frameworks, bonded Participants and full lifecycle — not a static, hand-maintained list.',
+  },
+  {
+    tag: 'Cross-border',
+    title: 'Recognition across ecosystems',
+    body: 'TRQP recognition resolves whether one authority recognizes another’s ecosystem — the cross-border trust EUDI needs between member states.',
+  },
+  {
+    tag: 'Attestations',
+    title: 'Trust for non-qualified EAAs',
+    body: 'Governance for the attestations outside the ETSI qualified stack — professional, organizational, sectoral credentials — where no trusted list applies.',
+  },
+  {
+    tag: 'Complementary',
+    title: 'Above lists & federation',
+    body: 'A live authorization layer that complements ETSI trusted lists and OpenID Federation: they enumerate and discover, Verana answers “authorized, right now?”',
+  },
+]
+
 export function Playground({ docsUrl }: { docsUrl: string }) {
   return (
     <>
@@ -9,13 +47,13 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
             <span className="live-dot" /> Verifiable Public Registry · live on testnet
           </span>
           <h1 data-rise style={{ animationDelay: '0.12s' }}>
-            The signature is valid. <em>Is the issuer governed?</em>
+            Before you present, <em>is the verifier even allowed to ask?</em>
           </h1>
           <p className="lede" data-rise style={{ animationDelay: '0.2s' }}>
-            A valid signature proves who signed — not whether they are an authorized{' '}
-            <b>Participant</b> in a governed <b>Ecosystem</b>. Verana's <b>Trust Resolver</b>{' '}
-            answers that, live and on-chain, returning a <b>Proof-of-Trust</b> from the Verifiable
-            Public Registry. Resolve any DID below and watch the registry respond.
+            eIDAS 2 requires every relying party to be registered and authorized for exactly the data
+            it requests. Verana resolves that live: is this DID an active <b>VERIFIER Participant</b>{' '}
+            for the credential it’s asking for? A <b>Proof-of-Trust</b> from the Verifiable Public
+            Registry — the check the wallet needs before it discloses anything. Resolve a DID below.
           </p>
           <div className="hero-cta" data-rise style={{ animationDelay: '0.28s' }}>
             <a className="btn solid" href="#resolve">Resolve a DID ↓</a>
@@ -29,25 +67,25 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
 
       <section>
         <div className="wrap">
-          <div className="kicker">Two layers of conformance</div>
-          <h2 className="sec">Protocol testing proves the credential is well-formed. Verana proves the parties are authorized.</h2>
+          <div className="kicker">The unchecked party</div>
+          <h2 className="sec">The wallet checks the credential. Today, nobody checks the requester.</h2>
           <div className="gap-grid">
             <div className="gap-card">
-              <h3>Protocol &amp; format conformance</h3>
+              <h3>What happens in the playground now</h3>
               <ul>
-                <li><span className="m">01</span> Signature verifies against the issuer key</li>
-                <li><span className="m">02</span> Format conforms — SD-JWT VC, ISO 18013 mdoc</li>
-                <li><span className="m">03</span> Requested attributes are disclosed</li>
-                <li><span className="m">✕</span> Says nothing about who is authorized to operate</li>
+                <li><span className="m">01</span> A relying party requests a PID or attribute</li>
+                <li><span className="m">02</span> The wallet verifies the signature &amp; format</li>
+                <li><span className="m">✕</span> Nothing confirms the requester is <b>registered</b></li>
+                <li><span className="m">✕</span> Nothing confirms it may ask for <b>that data</b></li>
               </ul>
             </div>
             <div className="gap-card on">
-              <h3>Governance conformance · Verana</h3>
+              <h3>What Verana resolves first</h3>
               <ul>
-                <li><span className="m">✓</span> Resolves the DID as a <b>Verifiable Service</b></li>
-                <li><span className="m">✓</span> Confirms an active <b>ISSUER Participant</b> for the Credential Schema</li>
-                <li><span className="m">✓</span> Confirms an active <b>VERIFIER Participant</b> before a request is honored</li>
-                <li><span className="m">✓</span> Returns a live <b>Proof-of-Trust</b>, bonded on-chain — not a static list</li>
+                <li><span className="m">✓</span> The requester’s DID is a <b>Verifiable Service</b></li>
+                <li><span className="m">✓</span> It holds an active <b>VERIFIER Participant</b> for the schema</li>
+                <li><span className="m">✓</span> Its authorization is <b>bonded on-chain</b>, not self-asserted</li>
+                <li><span className="m">✓</span> The answer is a live <b>Proof-of-Trust</b>, resolved on demand</li>
               </ul>
             </div>
           </div>
@@ -81,6 +119,46 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
 
       <section>
         <div className="wrap">
+          <div className="kicker">Beyond this demo</div>
+          <h2 className="sec">What Verana brings to the EU identity ecosystem.</h2>
+          <div className="caps">
+            {CAPS.map((c) => (
+              <div className={`cap${c.lead ? ' lead' : ''}`} key={c.title}>
+                <span className="tag">{c.tag}</span>
+                <h4>{c.title}</h4>
+                <p>{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <div className="kicker">Explore the live registry</div>
+          <h2 className="sec">Every Proof-of-Trust is backed by public, on-chain data.</h2>
+          <div className="vlinks">
+            <a className="vlink" href={`${VERANA_APP}/discover`} target="_blank" rel="noreferrer">
+              <span className="dot" /> Browse ecosystems ↗
+            </a>
+            <a className="vlink" href={`${VISUALIZER}/trust-registries`} target="_blank" rel="noreferrer">
+              <span className="dot" /> Trust registries ↗
+            </a>
+            <a className="vlink" href={`${VISUALIZER}/network-graph`} target="_blank" rel="noreferrer">
+              <span className="dot" /> Network graph ↗
+            </a>
+            <a className="vlink" href={`${VISUALIZER}/did-directory`} target="_blank" rel="noreferrer">
+              <span className="dot" /> DID directory ↗
+            </a>
+            <a className="vlink" href={EXPLORER} target="_blank" rel="noreferrer">
+              <span className="dot" /> Chain explorer ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
           <div className="kicker">How it resolves</div>
           <h2 className="sec">Three queries. One Proof-of-Trust.</h2>
           <div className="steps">
@@ -88,19 +166,19 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
               <div className="q">01 · trust resolution</div>
               <h4>Is the DID a Verifiable Service?</h4>
               <p>Dereferences the DID, verifies its Essential Credentials (ECS-Service, ECS-Organization), returns a Proof-of-Trust.</p>
-              <code>GET /v1/trust/resolve?did=…</code>
+              <span className="code">GET /v1/trust/resolve?did=…</span>
             </div>
             <div className="step">
-              <div className="q">02 · issuer authorization</div>
-              <h4>Authorized to issue?</h4>
-              <p>Checks the DID for an active ISSUER Participant against the Credential Schema's VTJSC.</p>
-              <code>…/issuer-authorization?did=…&amp;vtjscId=…</code>
-            </div>
-            <div className="step">
-              <div className="q">03 · verifier authorization</div>
+              <div className="q">02 · verifier authorization</div>
               <h4>Authorized to request?</h4>
-              <p>Confirms an active VERIFIER Participant before the relying party may ask for the credential.</p>
-              <code>…/verifier-authorization?did=…&amp;vtjscId=…</code>
+              <p>Checks the DID for an active <b>VERIFIER Participant</b> against the Credential Schema’s VTJSC.</p>
+              <span className="code">…/verifier-authorization?did=…&amp;vtjscId=…</span>
+            </div>
+            <div className="step">
+              <div className="q">03 · issuer authorization</div>
+              <h4>Authorized to issue?</h4>
+              <p>The mirror check for the credential’s issuer — an active <b>ISSUER Participant</b> for the schema.</p>
+              <span className="code">…/issuer-authorization?did=…&amp;vtjscId=…</span>
             </div>
           </div>
           <div className="hero-cta" style={{ marginTop: '28px' }}>

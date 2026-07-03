@@ -63,9 +63,9 @@ export const VERDICT_META: Record<
   Verdict,
   { label: string; glyph: string; tone: string }
 > = {
-  trusted: { label: 'Trusted', glyph: '✓', tone: 'verify' },
-  partial: { label: 'Partial', glyph: '≈', tone: 'partial' },
-  untrusted: { label: 'Untrusted', glyph: '✕', tone: 'untrust' },
-  not_found: { label: 'Not on registry', glyph: '∅', tone: 'untrust' },
-  unreachable: { label: 'Resolver unreachable', glyph: '⋯', tone: 'unknown' },
+  trusted: { label: 'Trusted', glyph: '✓', tone: 'ok' },
+  partial: { label: 'Partial', glyph: '≈', tone: 'warn' },
+  untrusted: { label: 'Untrusted', glyph: '✕', tone: 'bad' },
+  not_found: { label: 'Not on registry', glyph: '∅', tone: 'bad' },
+  unreachable: { label: 'Resolver unreachable', glyph: '⋯', tone: 'dim' },
 }
