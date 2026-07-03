@@ -7,28 +7,28 @@ const CAPS: { tag: string; title: string; body: string; lead?: boolean }[] = [
   {
     tag: 'This demo',
     title: 'Verify the verifier',
-    body: 'Resolve whether a relying party is an active VERIFIER Participant for the credential it requests — the eIDAS 2 RP-authorization check the wallet needs.',
+    body: 'Resolve whether a relying party is an active VERIFIER Participant for the credential it requests, the eIDAS 2 RP-authorization check the wallet needs.',
     lead: true,
   },
   {
     tag: 'Issuance',
     title: 'Verify the issuer',
-    body: 'Confirm a credential’s issuer is an accredited ISSUER Participant for its Credential Schema — accreditation a signature alone can’t prove.',
+    body: 'Confirm a credential’s issuer is an accredited ISSUER Participant for its Credential Schema, accreditation a signature alone can’t prove.',
   },
   {
     tag: 'Governance',
     title: 'Ecosystem governance',
-    body: 'On-chain Trust Registries with versioned governance frameworks, bonded Participants and full lifecycle — not a static, hand-maintained list.',
+    body: 'On-chain Trust Registries with versioned governance frameworks, bonded Participants and full lifecycle, not a static, hand-maintained list.',
   },
   {
     tag: 'Cross-border',
     title: 'Recognition across ecosystems',
-    body: 'TRQP recognition resolves whether one authority recognizes another’s ecosystem — the cross-border trust EUDI needs between member states.',
+    body: 'TRQP recognition resolves whether one authority recognizes another’s ecosystem, the cross-border trust EUDI needs between member states.',
   },
   {
     tag: 'Attestations',
     title: 'Trust for non-qualified EAAs',
-    body: 'Governance for the attestations outside the ETSI qualified stack — professional, organizational, sectoral credentials — where no trusted list applies.',
+    body: 'Governance for the attestations outside the ETSI qualified stack, professional, organizational, sectoral credentials, where no trusted list applies.',
   },
   {
     tag: 'Complementary',
@@ -52,7 +52,7 @@ export function Playground({ docsUrl, councilUrl }: { docsUrl: string; councilUr
             eIDAS 2 requires every relying party to be registered and authorized for exactly the data
             it requests. Verana resolves that live: is this DID an active <b>VERIFIER Participant</b>{' '}
             for the credential it’s asking for? A <b>Proof-of-Trust</b> from the Verifiable Public
-            Registry — the check the wallet needs before it discloses anything. Resolve a DID below.
+            Registry, the check the wallet needs before it discloses anything. Resolve a DID below.
           </p>
           <div className="hero-cta" data-rise style={{ animationDelay: '0.28s' }}>
             <a className="btn solid" href="#resolve">Resolve a DID ↓</a>
@@ -94,7 +94,7 @@ export function Playground({ docsUrl, councilUrl }: { docsUrl: string; councilUr
       <section>
         <div className="wrap">
           <div className="kicker">The trust chain</div>
-          <h2 className="sec">An issuer, a verifier — both bonded Participants in the VPR.</h2>
+          <h2 className="sec">An issuer, a verifier, both bonded Participants in the VPR.</h2>
           <div className="triangle">
             <div className="node">
               <div className="role">Issuer · Verifiable Service</div>
@@ -138,13 +138,13 @@ export function Playground({ docsUrl, councilUrl }: { docsUrl: string; councilUr
           <h2 className="sec">Independent governance, by design.</h2>
           <div className="council">
             <p>
-              The Verana Council is the independent governance body of the Verana network — a
+              The Verana Council is the independent governance body of the Verana network, a
               non-profit Swiss Verein that authors the network’s governance frameworks and operates
               its validators, deliberately separated from any commercial entity so no single actor
               can capture the trust rules.
             </p>
             <div className="council-pts">
-              <div><span>Swiss Verein</span>neutral &amp; non-profit — one member, one vote</div>
+              <div><span>Swiss Verein</span>neutral &amp; non-profit, one member, one vote</div>
               <div><span>25 seats, sector &amp; regional diversity</span>governments, standards bodies, enterprises</div>
               <div><span>Public-Sector Observer track</span>built for EU institutions &amp; sovereigns</div>
             </div>
@@ -194,7 +194,7 @@ export function Playground({ docsUrl, councilUrl }: { docsUrl: string; councilUr
             <div className="step">
               <div className="q">03 · issuer authorization</div>
               <h4>Authorized to issue?</h4>
-              <p>The mirror check for the credential’s issuer — an active <b>ISSUER Participant</b> for the schema.</p>
+              <p>The mirror check for the credential’s issuer, an active <b>ISSUER Participant</b> for the schema.</p>
               <span className="code">…/issuer-authorization?did=…&amp;vtjscId=…</span>
             </div>
           </div>

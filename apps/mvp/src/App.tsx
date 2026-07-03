@@ -27,7 +27,7 @@ export function App() {
       <footer className="site-foot">
         <div className="wrap foot-grid">
           <div className="foot-note">
-            <b>Verana</b> — Verifiable Public Registry (VPR) &amp; Trust Resolver<br />
+            <b>Verana</b>, Verifiable Public Registry (VPR) &amp; Trust Resolver<br />
             TRQP v2.0 · profile <b>verana-trqp/spec-v4</b> · did:webvh<br />
             network <b>vna-testnet-1</b> · resolver.testnet.verana.network<br />
             EUDIW Unfold playground · Conformance
