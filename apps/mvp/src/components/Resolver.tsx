@@ -117,11 +117,11 @@ function Verdict({ res }: { res: Resolution }) {
           <div className="verdict-links">
             <a
               className="mini-link"
-              href={`https://vis.testnet.verana.network/did-directory?did=${encodeURIComponent(res.did)}`}
+              href={`https://app.testnet.verana.network/did/${encodeURIComponent(res.did)}`}
               target="_blank"
               rel="noreferrer"
             >
-              Explore this DID in the Verana visualizer ↗
+              Explore this DID in the Verana app ↗
             </a>
           </div>
         </div>

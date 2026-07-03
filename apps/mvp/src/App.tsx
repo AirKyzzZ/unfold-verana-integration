@@ -1,41 +1,28 @@
-import { useEffect, useState } from 'react'
 import { Playground } from './components/Playground.tsx'
-import { Docs } from './components/Docs.tsx'
 import { VeranaMark } from './components/VeranaMark.tsx'
 
 const DOCS_URL = 'https://docs.verana.io'
-
-function useRoute() {
-  const [hash, setHash] = useState(window.location.hash)
-  useEffect(() => {
-    const on = () => setHash(window.location.hash)
-    window.addEventListener('hashchange', on)
-    return () => window.removeEventListener('hashchange', on)
-  }, [])
-  return hash.replace(/^#\/?/, '')
-}
+const COUNCIL_URL = 'https://veranacouncil.org/about'
 
 export function App() {
-  const route = useRoute()
-  const onDocs = route === 'docs'
-  useEffect(() => window.scrollTo(0, 0), [route])
-
   return (
     <>
       <header className="site-head">
         <div className="wrap">
-          <a className="brand" href="#/">
+          <a className="brand" href="#top">
             <VeranaMark size={30} /> Verana
           </a>
           <nav className="head-nav">
-            <a href="#/" className={!onDocs ? 'on' : ''}>Playground</a>
-            <a href="#/docs" className={onDocs ? 'on' : ''}>Docs</a>
+            <a href={DOCS_URL} target="_blank" rel="noreferrer">Docs ↗</a>
+            <a href={COUNCIL_URL} target="_blank" rel="noreferrer">Council ↗</a>
             <span className="head-tag">EUDIW Unfold · <b>Conformance</b></span>
           </nav>
         </div>
       </header>
 
-      <main id="top">{onDocs ? <Docs docsUrl={DOCS_URL} /> : <Playground docsUrl={DOCS_URL} />}</main>
+      <main id="top">
+        <Playground docsUrl={DOCS_URL} councilUrl={COUNCIL_URL} />
+      </main>
 
       <footer className="site-foot">
         <div className="wrap foot-grid">

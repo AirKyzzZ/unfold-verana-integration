@@ -2,7 +2,6 @@ import { Resolver } from './Resolver.tsx'
 
 const VERANA_APP = 'https://app.testnet.verana.network'
 const VISUALIZER = 'https://vis.testnet.verana.network'
-const EXPLORER = 'https://explorer.testnet.verana.network/Verana%20Testnet'
 
 const CAPS: { tag: string; title: string; body: string; lead?: boolean }[] = [
   {
@@ -38,7 +37,7 @@ const CAPS: { tag: string; title: string; body: string; lead?: boolean }[] = [
   },
 ]
 
-export function Playground({ docsUrl }: { docsUrl: string }) {
+export function Playground({ docsUrl, councilUrl }: { docsUrl: string; councilUrl: string }) {
   return (
     <>
       <section className="hero">
@@ -57,7 +56,7 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
           </p>
           <div className="hero-cta" data-rise style={{ animationDelay: '0.28s' }}>
             <a className="btn solid" href="#resolve">Resolve a DID ↓</a>
-            <a className="btn" href="#/docs">How it works ↗</a>
+            <a className="btn" href="#how">How it works ↓</a>
           </div>
           <div data-rise style={{ animationDelay: '0.36s' }}>
             <Resolver />
@@ -135,6 +134,27 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
 
       <section>
         <div className="wrap">
+          <div className="kicker">Who governs the trust</div>
+          <h2 className="sec">Independent governance, by design.</h2>
+          <div className="council">
+            <p>
+              The Verana Council is the independent governance body of the Verana network — a
+              non-profit Swiss Verein that authors the network’s governance frameworks and operates
+              its validators, deliberately separated from any commercial entity so no single actor
+              can capture the trust rules.
+            </p>
+            <div className="council-pts">
+              <div><span>Swiss Verein</span>neutral &amp; non-profit — one member, one vote</div>
+              <div><span>25 seats, sector &amp; regional diversity</span>governments, standards bodies, enterprises</div>
+              <div><span>Public-Sector Observer track</span>built for EU institutions &amp; sovereigns</div>
+            </div>
+            <a className="btn" href={councilUrl} target="_blank" rel="noreferrer">Verana Council ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
           <div className="kicker">Explore the live registry</div>
           <h2 className="sec">Every Proof-of-Trust is backed by public, on-chain data.</h2>
           <div className="vlinks">
@@ -147,17 +167,14 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
             <a className="vlink" href={`${VISUALIZER}/network-graph`} target="_blank" rel="noreferrer">
               <span className="dot" /> Network graph ↗
             </a>
-            <a className="vlink" href={`${VISUALIZER}/did-directory`} target="_blank" rel="noreferrer">
-              <span className="dot" /> DID directory ↗
-            </a>
-            <a className="vlink" href={EXPLORER} target="_blank" rel="noreferrer">
-              <span className="dot" /> Chain explorer ↗
+            <a className="vlink" href={docsUrl} target="_blank" rel="noreferrer">
+              <span className="dot" /> Verana docs ↗
             </a>
           </div>
         </div>
       </section>
 
-      <section>
+      <section id="how">
         <div className="wrap">
           <div className="kicker">How it resolves</div>
           <h2 className="sec">Three queries. One Proof-of-Trust.</h2>
@@ -182,8 +199,7 @@ export function Playground({ docsUrl }: { docsUrl: string }) {
             </div>
           </div>
           <div className="hero-cta" style={{ marginTop: '28px' }}>
-            <a className="btn" href="#/docs">Read the integration docs →</a>
-            <a className="btn" href={docsUrl} target="_blank" rel="noreferrer">Verana spec (v4) ↗</a>
+            <a className="btn" href={docsUrl} target="_blank" rel="noreferrer">Read the Verana docs ↗</a>
           </div>
         </div>
       </section>
