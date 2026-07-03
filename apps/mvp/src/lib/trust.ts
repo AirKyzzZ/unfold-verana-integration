@@ -13,7 +13,7 @@ export interface Resolution {
   message?: string
 }
 
-// Q1 — resolve trust status of a DID. Fail-closed: a 404 is a definitive
+// Q1, resolve trust status of a DID. Fail-closed: a 404 is a definitive
 // "no trust record" (untrusted), any other failure is an outage and must
 // never read as trusted.
 export async function resolve(did: string): Promise<Resolution> {
@@ -40,7 +40,7 @@ export async function resolve(did: string): Promise<Resolution> {
   }
 }
 
-// Q2 / Q3 — is this DID an accredited issuer / authorized verifier for a schema?
+// Q2 / Q3, is this DID an accredited issuer / authorized verifier for a schema?
 export async function checkAuthorization(
   role: 'issuer' | 'verifier',
   did: string,

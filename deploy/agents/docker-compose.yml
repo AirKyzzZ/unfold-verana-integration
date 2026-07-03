@@ -1,0 +1,52 @@
+# Unfold Verana ecosystem, vs-agents (v1.9.2) hosted on the Verana-controlled box
+# (clawdbot / Hetzner). Attached to the existing MOSIP Caddy network so Caddy
+# terminates TLS and routes each sslip.io subdomain to the right agent. The MOSIP
+# compose at /opt/mosip-org is left untouched; we only append two blocks to its Caddyfile.
+#
+# unfold-org      -> did:webvh:unfold-org.77.42.86.24.sslip.io      (ecosystem authority + issuer)
+# unfold-verifier -> did:webvh:unfold-verifier.77.42.86.24.sslip.io (relying party / verifier)
+services:
+  unfold-org:
+    image: veranalabs/vs-agent:v1.9.2
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      AGENT_PUBLIC_DID: "did:webvh:unfold-org.77.42.86.24.sslip.io"
+      AGENT_LABEL: "Unfold Ecosystem Authority"
+      ENABLE_PUBLIC_API_SWAGGER: "true"
+      USE_CORS: "true"
+      AGENT_LOG_LEVEL: "3"
+    volumes:
+      - unfold-org-data:/root/.afj
+    ports:
+      - "127.0.0.1:3200:3000"
+    expose:
+      - "3001"
+    networks: [web]
+
+  unfold-verifier:
+    image: veranalabs/vs-agent:v1.9.2
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      AGENT_PUBLIC_DID: "did:webvh:unfold-verifier.77.42.86.24.sslip.io"
+      AGENT_LABEL: "Unfold Verifier"
+      ENABLE_PUBLIC_API_SWAGGER: "true"
+      USE_CORS: "true"
+      AGENT_LOG_LEVEL: "3"
+    volumes:
+      - unfold-verifier-data:/root/.afj
+    ports:
+      - "127.0.0.1:3201:3000"
+    expose:
+      - "3001"
+    networks: [web]
+
+networks:
+  web:
+    external: true
+    name: mosip-org_web
+
+volumes:
+  unfold-org-data: {}
+  unfold-verifier-data: {}
