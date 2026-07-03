@@ -42,7 +42,7 @@ export function Resolver() {
   return (
     <div className="instrument" id="resolve">
       <div className="instrument-head">
-        <span>Trust Resolver — TRQP / Q1</span>
+        <span>Trust Resolver · Proof-of-Trust · TRQP v2.0</span>
         <span className="dots">
           <i /><i /><i />
         </span>
@@ -94,9 +94,7 @@ function Verdict({ res }: { res: Resolution }) {
           <div className={`status ${t}`}>{meta.label}</div>
           <div className="did">{res.did}</div>
           <div className="facts">
-            {res.production !== undefined && (
-              <span className="badge-net">{res.production ? 'production' : 'testnet'}</span>
-            )}
+            <span className="badge-net">Proof-of-Trust</span>
             {res.evaluatedAtBlock !== undefined && (
               <span className="fact">
                 <span>block</span>
